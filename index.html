@@ -1,15 +1,21 @@
 <!DOCTYPE html>
+
 <html lang="vi">
 
 <head>
+
 <meta charset="UTF-8">
 
 <meta
   name="viewport"
-  content="width=device-width, initial-scale=1.0"
+  content="width=device-width,
+  initial-scale=1.0,
+  maximum-scale=1.0,
+  user-scalable=no"
 >
 
 <title>Check-in Studio</title>
+
 
 <style>
 
@@ -18,203 +24,444 @@
 }
 
 body {
+
   margin: 0;
+
   min-height: 100vh;
+
   background: #e2e8f0;
-  font-family: Arial, Helvetica, sans-serif;
+
+  font-family:
+    Arial,
+    Helvetica,
+    sans-serif;
 
   display: flex;
+
   justify-content: center;
+
   align-items: center;
 
   padding: 10px;
+
 }
 
+
 .card {
+
   width: 100%;
+
   max-width: 520px;
 
   background: white;
 
-  border-radius: 32px;
+  border-radius: 28px;
 
-  padding: 25px;
+  padding: 22px;
 
   box-shadow:
-    0 10px 30px rgba(0,0,0,.12);
+    0 10px 35px
+    rgba(0,0,0,.13);
+
 }
+
+
+/* ==========================
+   HEADER
+========================== */
 
 .header {
+
   text-align: center;
-  margin-bottom: 18px;
+
+  margin-bottom: 20px;
+
 }
+
 
 .header h1 {
+
   margin: 0;
+
   color: #17233b;
+
   font-size: 28px;
+
 }
+
 
 .header p {
-  margin: 8px 0 0;
+
+  margin: 7px 0 0;
+
   color: #64748b;
-  font-size: 17px;
+
 }
 
+
+/* ==========================
+   INPUT
+========================== */
+
 label {
+
   display: block;
+
+  margin-bottom: 7px;
 
   color: #52627a;
 
+  font-size: 14px;
+
   font-weight: bold;
 
-  margin-bottom: 8px;
 }
 
+
 input {
+
   width: 100%;
-  height: 58px;
+
+  height: 55px;
+
+  padding: 0 16px;
 
   border: 2px solid #cbd5e1;
 
   border-radius: 15px;
 
-  padding: 0 18px;
+  outline: none;
 
   font-size: 17px;
 
-  outline: none;
 }
+
 
 input:focus {
+
   border-color: #4361ee;
+
 }
 
 
-/* =========================
+/* ==========================
    CAMERA
-========================= */
+========================== */
 
 .camera-box {
+
   position: relative;
 
   width: 100%;
 
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 4;
 
-  background: #1e293b;
+  max-height: 520px;
 
-  border-radius: 20px;
+  margin-top: 18px;
 
   overflow: hidden;
 
-  margin-top: 20px;
+  background: #111827;
 
-  border: 3px solid white;
+  border-radius: 22px;
 
-  box-shadow:
-    0 5px 20px rgba(0,0,0,.15);
 }
 
-video {
+
+#video {
+
   width: 100%;
+
   height: 100%;
 
   object-fit: cover;
 
-  display: block;
-
-  transform: scaleX(-1);
 }
 
 
-/* =========================
-   CAMERA OVERLAY
-========================= */
+/* CAMERA TRƯỚC HIỂN THỊ NHƯ GƯƠNG */
 
-.camera-overlay {
+#video.front-camera {
+
+  transform: scaleX(-1);
+
+}
+
+
+/* ==========================
+   ẢNH VỪA CHỤP
+========================== */
+
+#photoPreview {
+
   position: absolute;
 
   inset: 0;
 
-  background: #1e293b;
+  z-index: 5;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  display: none;
+
+  background: #111827;
+
+}
+
+
+/* ==========================
+   MÀN HÌNH MỞ CAMERA
+========================== */
+
+.camera-overlay {
+
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 10;
 
   display: flex;
 
   flex-direction: column;
 
+  justify-content: center;
+
   align-items: center;
 
-  justify-content: center;
+  padding: 25px;
 
   color: white;
 
   text-align: center;
 
-  padding: 20px;
+  background: #1e293b;
+
 }
 
-.lock {
-  font-size: 42px;
+
+.camera-icon {
+
+  font-size: 52px;
+
   margin-bottom: 10px;
+
 }
+
 
 .camera-overlay h2 {
-  margin: 0 0 10px;
-  font-size: 20px;
+
+  margin: 0 0 8px;
+
 }
 
+
 .camera-overlay p {
-  font-size: 14px;
+
+  max-width: 300px;
+
+  margin: 0 0 20px;
+
+  color: #e2e8f0;
 
   line-height: 1.5;
 
-  max-width: 320px;
-
-  margin-bottom: 18px;
 }
 
+
+/* ==========================
+   BẬT CAMERA
+========================== */
+
 .start-btn {
+
+  padding: 15px 28px;
+
   border: none;
+
+  border-radius: 15px;
 
   background: #4361ee;
 
   color: white;
 
-  font-weight: bold;
-
   font-size: 16px;
 
-  padding: 15px 28px;
-
-  border-radius: 14px;
+  font-weight: bold;
 
   cursor: pointer;
 
-  box-shadow:
-    0 6px 18px rgba(67,97,238,.35);
-}
-
-.start-btn:disabled {
-  opacity: .6;
-  cursor: wait;
 }
 
 
-/* =========================
+/* ==========================
+   ĐỔI CAMERA
+========================== */
+
+.switch-camera {
+
+  position: absolute;
+
+  top: 15px;
+
+  right: 15px;
+
+  z-index: 7;
+
+  width: 50px;
+
+  height: 50px;
+
+  display: none;
+
+  border: none;
+
+  border-radius: 50%;
+
+  background:
+    rgba(0,0,0,.50);
+
+  color: white;
+
+  font-size: 25px;
+
+  cursor: pointer;
+
+}
+
+
+.camera-label {
+
+  position: absolute;
+
+  top: 18px;
+
+  left: 15px;
+
+  z-index: 6;
+
+  display: none;
+
+  padding: 7px 12px;
+
+  border-radius: 20px;
+
+  background:
+    rgba(0,0,0,.45);
+
+  color: white;
+
+  font-size: 12px;
+
+}
+
+
+/* ==========================
+   ĐANG LƯU
+========================== */
+
+.saving-overlay {
+
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 20;
+
+  display: none;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  align-items: center;
+
+  background:
+    rgba(15,23,42,.72);
+
+  color: white;
+
+}
+
+
+.spinner {
+
+  width: 45px;
+
+  height: 45px;
+
+  margin-bottom: 15px;
+
+  border: 4px solid
+    rgba(255,255,255,.30);
+
+  border-top-color: white;
+
+  border-radius: 50%;
+
+  animation:
+    spin .8s linear infinite;
+
+}
+
+
+@keyframes spin {
+
+  to {
+
+    transform:
+      rotate(360deg);
+
+  }
+
+}
+
+
+.saving-title {
+
+  font-size: 19px;
+
+  font-weight: bold;
+
+}
+
+
+.saving-subtitle {
+
+  margin-top: 7px;
+
+  color: #e2e8f0;
+
+  font-size: 13px;
+
+}
+
+
+/* ==========================
    BUTTON
-========================= */
+========================== */
 
 .buttons {
+
   display: flex;
-  gap: 15px;
-  margin-top: 25px;
+
+  gap: 12px;
+
+  margin-top: 20px;
+
 }
 
+
 .check-btn {
+
   flex: 1;
 
-  height: 75px;
+  min-height: 75px;
 
   border: none;
 
@@ -222,152 +469,257 @@ video {
 
   color: white;
 
-  font-size: 17px;
+  font-size: 16px;
 
   font-weight: bold;
 
   cursor: pointer;
 
-  transition: .2s;
 }
+
 
 .check-btn:active {
-  transform: scale(.96);
+
+  transform:
+    scale(.96);
+
 }
 
+
 .check-btn:disabled {
+
   opacity: .45;
 
   cursor: not-allowed;
 
   transform: none;
+
 }
+
 
 .in {
+
   background: #10b981;
 
-  box-shadow:
-    0 8px 20px rgba(16,185,129,.25);
 }
+
 
 .out {
+
   background: #ef4444;
 
-  box-shadow:
-    0 8px 20px rgba(239,68,68,.25);
 }
 
 
-/* =========================
+/* ==========================
+   STATUS
+========================== */
+
+.status-box {
+
+  display: none;
+
+  margin-top: 15px;
+
+  padding: 15px;
+
+  border-radius: 14px;
+
+  line-height: 1.6;
+
+  text-align: center;
+
+}
+
+
+.status-box.success {
+
+  display: block;
+
+  background: #ecfdf5;
+
+  border:
+    1px solid #a7f3d0;
+
+  color: #047857;
+
+}
+
+
+.status-box.error {
+
+  display: block;
+
+  background: #fef2f2;
+
+  border:
+    1px solid #fecaca;
+
+  color: #b91c1c;
+
+}
+
+
+/* ==========================
    TOAST
-========================= */
+========================== */
 
 .toast {
+
   position: fixed;
 
   left: 50%;
+
   bottom: 25px;
 
-  transform:
-    translateX(-50%)
-    translateY(100px);
+  z-index: 10000;
 
-  background: #334155;
-
-  color: white;
+  max-width: 90%;
 
   padding: 14px 22px;
 
   border-radius: 30px;
 
+  background: #334155;
+
+  color: white;
+
   font-weight: bold;
-
-  opacity: 0;
-
-  transition: .3s;
-
-  z-index: 9999;
 
   text-align: center;
 
-  max-width: 90%;
+  opacity: 0;
+
+  transform:
+    translateX(-50%)
+    translateY(100px);
+
+  transition: .3s;
+
 }
 
+
 .toast.show {
+
+  opacity: 1;
+
   transform:
     translateX(-50%)
     translateY(0);
 
-  opacity: 1;
 }
+
 
 .toast.success {
+
   background: #10b981;
+
 }
+
 
 .toast.error {
+
   background: #ef4444;
+
 }
+
 
 .toast.loading {
+
   background: #4361ee;
+
 }
 
 
-/* =========================
-   FLASH
-========================= */
+/* ==========================
+   FLASH CAMERA
+========================== */
 
 #flash {
+
   position: fixed;
 
   inset: 0;
+
+  z-index: 9999;
+
+  pointer-events: none;
 
   background: white;
 
   opacity: 0;
 
-  pointer-events: none;
+  transition:
+    opacity .08s;
 
-  z-index: 9998;
-
-  transition: opacity .1s;
 }
 
 
-/* =========================
+/* ==========================
    MOBILE
-========================= */
+========================== */
 
 @media(max-width:480px) {
 
   body {
-    padding: 3px;
+
+    padding: 4px;
+
+    align-items:
+      flex-start;
+
   }
+
 
   .card {
-    padding: 20px;
-    border-radius: 28px;
+
+    padding: 16px;
+
+    border-radius: 23px;
+
   }
+
 
   .header h1 {
-    font-size: 25px;
+
+    font-size: 24px;
+
   }
+
 
   .header p {
-    font-size: 15px;
+
+    font-size: 14px;
+
   }
+
+
+  .camera-box {
+
+    margin-top: 14px;
+
+    max-height: 470px;
+
+  }
+
 
   .buttons {
-    gap: 10px;
+
+    gap: 9px;
+
   }
 
+
   .check-btn {
-    font-size: 15px;
+
+    min-height: 68px;
+
   }
+
 }
 
 </style>
+
 </head>
 
 
@@ -392,7 +744,8 @@ video {
   </div>
 
 
-  <!-- TÊN -->
+
+  <!-- TÊN NHÂN VIÊN -->
 
   <label for="employeeName">
 
@@ -409,6 +762,7 @@ video {
   >
 
 
+
   <!-- CAMERA -->
 
   <div class="camera-box">
@@ -417,51 +771,107 @@ video {
     <video
       id="video"
       autoplay
-      playsinline
       muted
+      playsinline
     ></video>
 
 
-    <div
-      class="camera-overlay"
-      id="cameraOverlay"
+
+    <!-- ẢNH VỪA CHỤP -->
+
+    <img
+      id="photoPreview"
+      alt="Ảnh vừa chụp"
     >
 
 
-      <div class="lock">
-        🔒
+
+    <!-- TÊN CAMERA -->
+
+    <div
+      id="cameraLabel"
+      class="camera-label"
+    >
+      CAMERA TRƯỚC
+    </div>
+
+
+
+    <!-- ĐỔI CAMERA -->
+
+    <button
+      id="switchCamera"
+      class="switch-camera"
+      type="button"
+    >
+      🔄
+    </button>
+
+
+
+    <!-- MỞ CAMERA -->
+
+    <div
+      id="cameraOverlay"
+      class="camera-overlay"
+    >
+
+      <div class="camera-icon">
+        📷
       </div>
 
 
       <h2>
-        Cấp quyền Camera
+        Camera chấm công
       </h2>
 
 
       <p>
-
-        Nhấn nút bên dưới và chọn
-        "Cho phép" khi trình duyệt
-        hỏi quyền Camera.
-
+        Bật Camera để chụp ảnh
+        khi vào ca hoặc ra ca.
       </p>
 
 
       <button
-        class="start-btn"
         id="startCamera"
+        class="start-btn"
         type="button"
       >
-
         BẬT MÁY ẢNH
-
       </button>
 
+    </div>
+
+
+
+    <!-- ĐANG LƯU -->
+
+    <div
+      id="savingOverlay"
+      class="saving-overlay"
+    >
+
+      <div class="spinner"></div>
+
+
+      <div class="saving-title">
+
+        📤 Đang lưu ảnh...
+
+      </div>
+
+
+      <div class="saving-subtitle">
+
+        Vui lòng chờ trong giây lát
+
+      </div>
 
     </div>
 
 
   </div>
+
 
 
   <!-- BUTTON -->
@@ -470,25 +880,29 @@ video {
 
 
     <button
-      class="check-btn in"
       id="btnIn"
+      class="check-btn in"
       type="button"
       disabled
     >
 
-      👋 VÀO CA
+      👋
+      <br>
+      VÀO CA
 
     </button>
 
 
     <button
-      class="check-btn out"
       id="btnOut"
+      class="check-btn out"
       type="button"
       disabled
     >
 
-      🏃 RA CA
+      🏃
+      <br>
+      RA CA
 
     </button>
 
@@ -496,10 +910,20 @@ video {
   </div>
 
 
+
+  <!-- KẾT QUẢ -->
+
+  <div
+    id="statusBox"
+    class="status-box"
+  ></div>
+
+
 </div>
 
 
-<!-- CANVAS -->
+
+<!-- CANVAS CHỤP ẢNH -->
 
 <canvas
   id="canvas"
@@ -507,9 +931,11 @@ video {
 ></canvas>
 
 
+
 <!-- FLASH -->
 
 <div id="flash"></div>
+
 
 
 <!-- TOAST -->
@@ -520,11 +946,12 @@ video {
 ></div>
 
 
-<!-- IFRAME GỬI APPS SCRIPT -->
+
+<!-- NƠI NHẬN PHẢN HỒI APPS SCRIPT -->
 
 <iframe
-  name="uploadFrame"
   id="uploadFrame"
+  name="uploadFrame"
   style="display:none;"
 ></iframe>
 
@@ -534,12 +961,12 @@ video {
 
 
 // ======================================================
-// URL APPS SCRIPT CỦA BẠN
-// ĐÃ CHÈN SẴN
+// APPS SCRIPT URL
 // ======================================================
 
 const SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbzUZVIgxyWO3GAgRmDTyXUhTdcdw9ezmXfMc3-69iA_EF9U3ZpA1RN4N_gQglkuWrAy/exec";
+
 
 
 // ======================================================
@@ -549,40 +976,107 @@ const SCRIPT_URL =
 const video =
   document.getElementById("video");
 
+
 const canvas =
   document.getElementById("canvas");
 
+
+const photoPreview =
+  document.getElementById(
+    "photoPreview"
+  );
+
+
 const cameraOverlay =
-  document.getElementById("cameraOverlay");
+  document.getElementById(
+    "cameraOverlay"
+  );
+
 
 const startCamera =
-  document.getElementById("startCamera");
+  document.getElementById(
+    "startCamera"
+  );
+
+
+const switchCamera =
+  document.getElementById(
+    "switchCamera"
+  );
+
+
+const cameraLabel =
+  document.getElementById(
+    "cameraLabel"
+  );
+
 
 const employeeName =
-  document.getElementById("employeeName");
+  document.getElementById(
+    "employeeName"
+  );
+
 
 const btnIn =
-  document.getElementById("btnIn");
+  document.getElementById(
+    "btnIn"
+  );
+
 
 const btnOut =
-  document.getElementById("btnOut");
+  document.getElementById(
+    "btnOut"
+  );
+
+
+const savingOverlay =
+  document.getElementById(
+    "savingOverlay"
+  );
+
+
+const statusBox =
+  document.getElementById(
+    "statusBox"
+  );
+
 
 const toast =
-  document.getElementById("toast");
+  document.getElementById(
+    "toast"
+  );
+
 
 const flash =
-  document.getElementById("flash");
+  document.getElementById(
+    "flash"
+  );
 
+
+
+// ======================================================
+// BIẾN
+// ======================================================
 
 let cameraStream = null;
 
+
+// Camera trước mặc định
+let currentFacing = "user";
+
+
 let isSaving = false;
+
+
+let saveStartTime = 0;
+
 
 let toastTimer = null;
 
 
+
 // ======================================================
-// THÔNG BÁO
+// TOAST
 // ======================================================
 
 function showToast(
@@ -612,7 +1106,7 @@ function showToast(
 
     toastTimer =
       setTimeout(
-        function () {
+        function() {
 
           toast.classList.remove(
             "show"
@@ -627,177 +1121,311 @@ function showToast(
 }
 
 
+
+// ======================================================
+// STATUS
+// ======================================================
+
+function setStatus(
+  html,
+  type
+) {
+
+  statusBox.className =
+    "status-box " + type;
+
+
+  statusBox.innerHTML =
+    html;
+
+}
+
+
+function clearStatus() {
+
+  statusBox.className =
+    "status-box";
+
+
+  statusBox.innerHTML =
+    "";
+
+}
+
+
+
+// ======================================================
+// MỞ CAMERA
+// ======================================================
+
+async function openCamera() {
+
+  try {
+
+    startCamera.disabled =
+      true;
+
+
+    startCamera.textContent =
+      "ĐANG MỞ CAMERA...";
+
+
+    if (
+      !navigator.mediaDevices ||
+      !navigator.mediaDevices.getUserMedia
+    ) {
+
+      throw new Error(
+        "Trình duyệt không hỗ trợ Camera."
+      );
+
+    }
+
+
+    // Tắt camera cũ
+
+    if (cameraStream) {
+
+      cameraStream
+        .getTracks()
+        .forEach(
+          function(track) {
+
+            track.stop();
+
+          }
+        );
+
+    }
+
+
+    // Mở camera
+
+    cameraStream =
+      await navigator.mediaDevices
+        .getUserMedia({
+
+          video: {
+
+            facingMode: {
+              ideal: currentFacing
+            },
+
+            width: {
+              ideal: 1280
+            },
+
+            height: {
+              ideal: 720
+            }
+
+          },
+
+          audio: false
+
+        });
+
+
+    video.srcObject =
+      cameraStream;
+
+
+    await video.play();
+
+
+    updateCameraUI();
+
+
+    cameraOverlay.style.display =
+      "none";
+
+
+    switchCamera.style.display =
+      "block";
+
+
+    cameraLabel.style.display =
+      "block";
+
+
+    btnIn.disabled =
+      false;
+
+
+    btnOut.disabled =
+      false;
+
+
+    startCamera.disabled =
+      false;
+
+
+    startCamera.textContent =
+      "BẬT MÁY ẢNH";
+
+
+    showToast(
+      "✅ Camera đã sẵn sàng!",
+      "success"
+    );
+
+  }
+
+  catch(error) {
+
+    console.error(
+      "Camera Error:",
+      error
+    );
+
+
+    startCamera.disabled =
+      false;
+
+
+    startCamera.textContent =
+      "BẬT MÁY ẢNH";
+
+
+    if (
+      error.name ===
+      "NotAllowedError"
+    ) {
+
+      showToast(
+        "⚠️ Bạn chưa cho phép Camera!",
+        "error"
+      );
+
+    }
+
+    else if (
+      error.name ===
+      "NotFoundError"
+    ) {
+
+      showToast(
+        "❌ Không tìm thấy Camera!",
+        "error"
+      );
+
+    }
+
+    else if (
+      error.name ===
+      "NotReadableError"
+    ) {
+
+      showToast(
+        "❌ Camera đang được ứng dụng khác sử dụng!",
+        "error"
+      );
+
+    }
+
+    else {
+
+      showToast(
+        "❌ " + error.message,
+        "error"
+      );
+
+    }
+
+  }
+
+}
+
+
+
+// ======================================================
+// CAMERA TRƯỚC / SAU
+// ======================================================
+
+function updateCameraUI() {
+
+  if (
+    currentFacing === "user"
+  ) {
+
+    video.classList.add(
+      "front-camera"
+    );
+
+
+    cameraLabel.textContent =
+      "CAMERA TRƯỚC";
+
+  }
+
+  else {
+
+    video.classList.remove(
+      "front-camera"
+    );
+
+
+    cameraLabel.textContent =
+      "CAMERA SAU";
+
+  }
+
+}
+
+
+
 // ======================================================
 // BẬT CAMERA
 // ======================================================
 
 startCamera.addEventListener(
   "click",
-  async function () {
-
-    try {
-
-      startCamera.disabled =
-        true;
+  openCamera
+);
 
 
-      startCamera.textContent =
-        "ĐANG MỞ CAMERA...";
 
+// ======================================================
+// ĐỔI CAMERA
+// ======================================================
 
-      // Kiểm tra trình duyệt
+switchCamera.addEventListener(
+  "click",
+  async function() {
 
-      if (
-        !navigator.mediaDevices ||
-        !navigator.mediaDevices.getUserMedia
-      ) {
+    if (isSaving) {
 
-        throw new Error(
-          "Trình duyệt không hỗ trợ Camera."
-        );
-
-      }
-
-
-      // Tắt camera cũ
-
-      if (cameraStream) {
-
-        cameraStream
-          .getTracks()
-          .forEach(
-            function (track) {
-
-              track.stop();
-
-            }
-          );
-
-      }
-
-
-      // Mở camera
-
-      cameraStream =
-        await navigator.mediaDevices
-          .getUserMedia({
-
-            video: {
-
-              facingMode: {
-                ideal: "user"
-              },
-
-              width: {
-                ideal: 1280
-              },
-
-              height: {
-                ideal: 720
-              }
-
-            },
-
-            audio: false
-
-          });
-
-
-      video.srcObject =
-        cameraStream;
-
-
-      await video.play();
-
-
-      // Camera sẵn sàng
-
-      cameraOverlay.style.display =
-        "none";
-
-
-      btnIn.disabled =
-        false;
-
-
-      btnOut.disabled =
-        false;
-
-
-      showToast(
-        "✅ Camera đã sẵn sàng!",
-        "success"
-      );
-
+      return;
 
     }
 
-    catch (error) {
+
+    switchCamera.disabled =
+      true;
 
 
-      console.error(
-        "Camera Error:",
-        error
-      );
+    currentFacing =
+      currentFacing === "user"
+        ? "environment"
+        : "user";
 
 
-      startCamera.disabled =
+    try {
+
+      await openCamera();
+
+    }
+
+    finally {
+
+      switchCamera.disabled =
         false;
-
-
-      startCamera.textContent =
-        "BẬT MÁY ẢNH";
-
-
-      if (
-        error.name ===
-        "NotAllowedError"
-      ) {
-
-        showToast(
-          "⚠️ Bạn chưa cho phép Camera!",
-          "error"
-        );
-
-      }
-
-      else if (
-        error.name ===
-        "NotFoundError"
-      ) {
-
-        showToast(
-          "❌ Không tìm thấy Camera!",
-          "error"
-        );
-
-      }
-
-      else if (
-        error.name ===
-        "NotReadableError"
-      ) {
-
-        showToast(
-          "❌ Camera đang được ứng dụng khác sử dụng!",
-          "error"
-        );
-
-      }
-
-      else {
-
-        showToast(
-          "❌ " + error.message,
-          "error"
-        );
-
-      }
 
     }
 
   }
 );
+
 
 
 // ======================================================
@@ -806,7 +1434,7 @@ startCamera.addEventListener(
 
 btnIn.addEventListener(
   "click",
-  function () {
+  function() {
 
     takeSnapshot(
       "VÀO CA"
@@ -816,13 +1444,14 @@ btnIn.addEventListener(
 );
 
 
+
 // ======================================================
 // RA CA
 // ======================================================
 
 btnOut.addEventListener(
   "click",
-  function () {
+  function() {
 
     takeSnapshot(
       "RA CA"
@@ -832,12 +1461,12 @@ btnOut.addEventListener(
 );
 
 
+
 // ======================================================
 // CHỤP ẢNH
 // ======================================================
 
 function takeSnapshot(type) {
-
 
   if (isSaving) {
 
@@ -847,10 +1476,12 @@ function takeSnapshot(type) {
 
 
   const name =
-    employeeName.value.trim();
+    employeeName
+      .value
+      .trim();
 
 
-  // Kiểm tra tên
+  // Chưa nhập tên
 
   if (!name) {
 
@@ -868,7 +1499,7 @@ function takeSnapshot(type) {
   }
 
 
-  // Kiểm tra Camera
+  // Camera chưa chạy
 
   if (
     !cameraStream ||
@@ -887,37 +1518,20 @@ function takeSnapshot(type) {
   }
 
 
-  // Khóa nút
+  clearStatus();
 
-  isSaving =
-    true;
-
-
-  btnIn.disabled =
-    true;
-
-
-  btnOut.disabled =
-    true;
-
-
-  showToast(
-    "📤 Đang lưu ảnh...",
-    "loading",
-    false
-  );
 
 
   // ====================================================
-  // FLASH
+  // HIỆU ỨNG FLASH
   // ====================================================
 
   flash.style.opacity =
-    "0.85";
+    "0.95";
 
 
   setTimeout(
-    function () {
+    function() {
 
       flash.style.opacity =
         "0";
@@ -927,17 +1541,14 @@ function takeSnapshot(type) {
   );
 
 
-  // ====================================================
-  // NÉN ẢNH
-  // ====================================================
 
-  // 480px giúp upload nhanh
+  // ====================================================
+  // KÍCH THƯỚC ẢNH
+  // ====================================================
 
   const MAX_WIDTH =
     480;
 
-
-  // Chất lượng 42%
 
   const JPEG_QUALITY =
     0.42;
@@ -978,8 +1589,6 @@ function takeSnapshot(type) {
     );
 
 
-  // Reset
-
   ctx.setTransform(
     1,
     0,
@@ -990,19 +1599,13 @@ function takeSnapshot(type) {
   );
 
 
-  // Lật selfie
 
-  ctx.translate(
-    canvas.width,
-    0
-  );
-
-
-  ctx.scale(
-    -1,
-    1
-  );
-
+  // ====================================================
+  // CHỤP FRAME CAMERA
+  //
+  // Camera trước trên màn hình là gương,
+  // nhưng ảnh lưu giữ chiều thật.
+  // ====================================================
 
   ctx.drawImage(
     video,
@@ -1013,7 +1616,10 @@ function takeSnapshot(type) {
   );
 
 
-  // JPEG Base64
+
+  // ====================================================
+  // NÉN JPEG
+  // ====================================================
 
   const base64Data =
     canvas.toDataURL(
@@ -1022,20 +1628,93 @@ function takeSnapshot(type) {
     );
 
 
-  // Hiển thị kích thước trong Console
 
-  console.log(
-    "Dung lượng ảnh khoảng:",
+  // ====================================================
+  // HIỆN ẢNH VỪA CHỤP
+  // ====================================================
+
+  photoPreview.src =
+    base64Data;
+
+
+  photoPreview.style.display =
+    "block";
+
+
+  setTimeout(
+    function() {
+
+      photoPreview.style.display =
+        "none";
+
+    },
+    650
+  );
+
+
+
+  // ====================================================
+  // BẮT ĐẦU LƯU
+  // ====================================================
+
+  isSaving =
+    true;
+
+
+  saveStartTime =
+    performance.now();
+
+
+  btnIn.disabled =
+    true;
+
+
+  btnOut.disabled =
+    true;
+
+
+  switchCamera.disabled =
+    true;
+
+
+  employeeName.disabled =
+    true;
+
+
+  savingOverlay.style.display =
+    "flex";
+
+
+  showToast(
+    "📤 Đang lưu ảnh...",
+    "loading",
+    false
+  );
+
+
+
+  // ====================================================
+  // HIỂN THỊ DUNG LƯỢNG TRONG CONSOLE
+  // ====================================================
+
+  const sizeKB =
     Math.round(
       base64Data.length *
       0.75 /
       1024
-    ),
-    "KB"
+    );
+
+
+  console.log(
+    "Dung lượng ảnh:",
+    sizeKB + " KB"
   );
 
 
-  // Gửi Apps Script
+
+  // ====================================================
+  // GỬI
+  // ====================================================
 
   sendToAppsScript(
     name,
@@ -1044,6 +1723,7 @@ function takeSnapshot(type) {
   );
 
 }
+
 
 
 // ======================================================
@@ -1055,7 +1735,6 @@ function sendToAppsScript(
   type,
   base64Data
 ) {
-
 
   const form =
     document.createElement(
@@ -1079,7 +1758,8 @@ function sendToAppsScript(
     "none";
 
 
-  // Tên
+
+  // TÊN NHÂN VIÊN
 
   const nameField =
     document.createElement(
@@ -1099,7 +1779,8 @@ function sendToAppsScript(
     name;
 
 
-  // Loại
+
+  // LOẠI
 
   const typeField =
     document.createElement(
@@ -1119,7 +1800,8 @@ function sendToAppsScript(
     type;
 
 
-  // Ảnh
+
+  // ẢNH
 
   const imageField =
     document.createElement(
@@ -1137,6 +1819,7 @@ function sendToAppsScript(
 
   imageField.style.display =
     "none";
+
 
 
   form.appendChild(
@@ -1159,15 +1842,12 @@ function sendToAppsScript(
   );
 
 
-  // Gửi
-
   form.submit();
 
 
-  // Xóa form sau khi gửi
 
   setTimeout(
-    function () {
+    function() {
 
       form.remove();
 
@@ -1178,19 +1858,19 @@ function sendToAppsScript(
 }
 
 
+
 // ======================================================
 // NHẬN KẾT QUẢ
 // ======================================================
 
 window.addEventListener(
   "message",
-  function (event) {
-
+  function(event) {
 
     if (
       !event.data ||
       event.data.type !==
-      "CHECKIN_RESULT"
+        "CHECKIN_RESULT"
     ) {
 
       return;
@@ -1199,11 +1879,30 @@ window.addEventListener(
 
 
     const result =
-      event.data.result;
+      event.data.data;
 
+
+    const seconds =
+      (
+        (
+          performance.now() -
+          saveStartTime
+        ) /
+        1000
+      ).toFixed(1);
+
+
+
+    // ==================================================
+    // MỞ KHÓA GIAO DIỆN
+    // ==================================================
 
     isSaving =
       false;
+
+
+    savingOverlay.style.display =
+      "none";
 
 
     btnIn.disabled =
@@ -1214,23 +1913,119 @@ window.addEventListener(
       false;
 
 
+    switchCamera.disabled =
+      false;
+
+
+    employeeName.disabled =
+      false;
+
+
+
+    // ==================================================
+    // THÀNH CÔNG
+    // ==================================================
+
     if (
-      result ===
-      "Thành công!"
+      result &&
+      result.success === true
     ) {
 
       showToast(
-        "✅ Chấm công thành công!",
+        "✅ Ảnh đã được lưu!",
         "success"
+      );
+
+
+      setStatus(
+
+        "✅ <b>" +
+        result.type +
+        " thành công!</b>" +
+
+        "<br>" +
+
+        "📸 Ảnh đã được lưu vào Google Drive" +
+
+        "<br>" +
+
+        "👤 " +
+        result.employeeName +
+
+        "<br>" +
+
+        "📅 " +
+        result.date +
+
+        " &nbsp; 🕐 " +
+        result.time +
+
+        "<br>" +
+
+        "⏱ Thời gian xử lý: " +
+        seconds +
+        " giây",
+
+        "success"
+
+      );
+
+
+      console.log(
+        "CHẤM CÔNG THÀNH CÔNG",
+        result
       );
 
     }
 
+
+    // ==================================================
+    // LỖI
+    // ==================================================
+
     else {
 
+      let message =
+        "Không thể lưu ảnh.";
+
+
+      if (
+        result &&
+        result.message
+      ) {
+
+        message =
+          result.message;
+
+      }
+
+
       showToast(
-        "❌ " + result,
+        "❌ Lưu ảnh thất bại!",
         "error"
+      );
+
+
+      setStatus(
+
+        "❌ <b>LƯU THẤT BẠI</b>" +
+
+        "<br>" +
+
+        message +
+
+        "<br>" +
+
+        "Vui lòng thử lại.",
+
+        "error"
+
+      );
+
+
+      console.error(
+        "Lỗi:",
+        message
       );
 
     }
@@ -1239,22 +2034,21 @@ window.addEventListener(
 );
 
 
+
 // ======================================================
-// TẮT CAMERA KHI ĐÓNG TRANG
+// TẮT CAMERA KHI RỜI TRANG
 // ======================================================
 
 window.addEventListener(
   "beforeunload",
-  function () {
-
+  function() {
 
     if (cameraStream) {
-
 
       cameraStream
         .getTracks()
         .forEach(
-          function (track) {
+          function(track) {
 
             track.stop();
 
@@ -1268,6 +2062,7 @@ window.addEventListener(
 
 
 </script>
+
 
 </body>
 
