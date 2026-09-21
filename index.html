@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Check-in Studio</title>
+
+<style>
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: #e2e8f0;
+  font-family: Arial, Helvetica, sans-serif;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding: 10px;
+}
+
+.card {
+  width: 100%;
+  max-width: 520px;
+
+  background: white;
+
+  border-radius: 32px;
+
+  padding: 25px;
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,.12);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.header h1 {
+  margin: 0;
+  color: #17233b;
+  font-size: 28px;
+}
+
+.header p {
+  margin: 8px 0 0;
+  color: #64748b;
+  font-size: 17px;
+}
+
+label {
+  display: block;
+
+  color: #52627a;
+
+  font-weight: bold;
+
+  margin-bottom: 8px;
+}
+
+input {
+  width: 100%;
+  height: 58px;
+
+  border: 2px solid #cbd5e1;
+
+  border-radius: 15px;
+
+  padding: 0 18px;
+
+  font-size: 17px;
+
+  outline: none;
+}
+
+input:focus {
+  border-color: #4361ee;
+}
+
+
+/* =========================
+   CAMERA
+========================= */
+
+.camera-box {
+  position: relative;
+
+  width: 100%;
+
+  aspect-ratio: 4 / 3;
+
+  background: #1e293b;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  margin-top: 20px;
+
+  border: 3px solid white;
+
+  box-shadow:
+    0 5px 20px rgba(0,0,0,.15);
+}
+
+video {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  display: block;
+
+  transform: scaleX(-1);
+}
+
+
+/* =========================
+   CAMERA OVERLAY
+========================= */
+
+.camera-overlay {
+  position: absolute;
+
+  inset: 0;
+
+  background: #1e293b;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  color: white;
+
+  text-align: center;
+
+  padding: 20px;
+}
+
+.lock {
+  font-size: 42px;
+  margin-bottom: 10px;
+}
+
+.camera-overlay h2 {
+  margin: 0 0 10px;
+  font-size: 20px;
+}
+
+.camera-overlay p {
+  font-size: 14px;
+
+  line-height: 1.5;
+
+  max-width: 320px;
+
+  margin-bottom: 18px;
+}
+
+.start-btn {
+  border: none;
+
+  background: #4361ee;
+
+  color: white;
+
+  font-weight: bold;
+
+  font-size: 16px;
+
+  padding: 15px 28px;
+
+  border-radius: 14px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 6px 18px rgba(67,97,238,.35);
+}
+
+.start-btn:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+
+/* =========================
+   BUTTON
+========================= */
+
+.buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.check-btn {
+  flex: 1;
+
+  height: 75px;
+
+  border: none;
+
+  border-radius: 17px;
+
+  color: white;
+
+  font-size: 17px;
+
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: .2s;
+}
+
+.check-btn:active {
+  transform: scale(.96);
+}
+
+.check-btn:disabled {
+  opacity: .45;
+
+  cursor: not-allowed;
+
+  transform: none;
+}
+
+.in {
+  background: #10b981;
+
+  box-shadow:
+    0 8px 20px rgba(16,185,129,.25);
+}
+
+.out {
+  background: #ef4444;
+
+  box-shadow:
+    0 8px 20px rgba(239,68,68,.25);
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+.toast {
+  position: fixed;
+
+  left: 50%;
+  bottom: 25px;
+
+  transform:
+    translateX(-50%)
+    translateY(100px);
+
+  background: #334155;
+
+  color: white;
+
+  padding: 14px 22px;
+
+  border-radius: 30px;
+
+  font-weight: bold;
+
+  opacity: 0;
+
+  transition: .3s;
+
+  z-index: 9999;
+
+  text-align: center;
+
+  max-width: 90%;
+}
+
+.toast.show {
+  transform:
+    translateX(-50%)
+    translateY(0);
+
+  opacity: 1;
+}
+
+.toast.success {
+  background: #10b981;
+}
+
+.toast.error {
+  background: #ef4444;
+}
+
+.toast.loading {
+  background: #4361ee;
+}
+
+
+/* =========================
+   FLASH
+========================= */
+
+#flash {
+  position: fixed;
+
+  inset: 0;
+
+  background: white;
+
+  opacity: 0;
+
+  pointer-events: none;
+
+  z-index: 9998;
+
+  transition: opacity .1s;
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:480px) {
+
+  body {
+    padding: 3px;
+  }
+
+  .card {
+    padding: 20px;
+    border-radius: 28px;
+  }
+
+  .header h1 {
+    font-size: 25px;
+  }
+
+  .header p {
+    font-size: 15px;
+  }
+
+  .buttons {
+    gap: 10px;
+  }
+
+  .check-btn {
+    font-size: 15px;
+  }
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="card">
+
+
+  <!-- HEADER -->
+
+  <div class="header">
+
+    <h1>
+      📷 Check-in Studio
+    </h1>
+
+    <p>
+      Hệ thống chấm công tự động
+    </p>
+
+  </div>
+
+
+  <!-- TÊN -->
+
+  <label for="employeeName">
+
+    HỌ VÀ TÊN NHÂN VIÊN
+
+  </label>
+
+
+  <input
+    id="employeeName"
+    type="text"
+    placeholder="Nhập tên của bạn..."
+    autocomplete="name"
+  >
+
+
+  <!-- CAMERA -->
+
+  <div class="camera-box">
+
+
+    <video
+      id="video"
+      autoplay
+      playsinline
+      muted
+    ></video>
+
+
+    <div
+      class="camera-overlay"
+      id="cameraOverlay"
+    >
+
+
+      <div class="lock">
+        🔒
+      </div>
+
+
+      <h2>
+        Cấp quyền Camera
+      </h2>
+
+
+      <p>
+
+        Nhấn nút bên dưới và chọn
+        "Cho phép" khi trình duyệt
+        hỏi quyền Camera.
+
+      </p>
+
+
+      <button
+        class="start-btn"
+        id="startCamera"
+        type="button"
+      >
+
+        BẬT MÁY ẢNH
+
+      </button>
+
+
+    </div>
+
+
+  </div>
+
+
+  <!-- BUTTON -->
+
+  <div class="buttons">
+
+
+    <button
+      class="check-btn in"
+      id="btnIn"
+      type="button"
+      disabled
+    >
+
+      👋 VÀO CA
+
+    </button>
+
+
+    <button
+      class="check-btn out"
+      id="btnOut"
+      type="button"
+      disabled
+    >
+
+      🏃 RA CA
+
+    </button>
+
+
+  </div>
+
+
+</div>
+
+
+<!-- CANVAS -->
+
+<canvas
+  id="canvas"
+  style="display:none;"
+></canvas>
+
+
+<!-- FLASH -->
+
+<div id="flash"></div>
+
+
+<!-- TOAST -->
+
+<div
+  id="toast"
+  class="toast"
+></div>
+
+
+<!-- IFRAME GỬI APPS SCRIPT -->
+
+<iframe
+  name="uploadFrame"
+  id="uploadFrame"
+  style="display:none;"
+></iframe>
+
+
+
+<script>
+
+
+// ======================================================
+// URL APPS SCRIPT CỦA BẠN
+// ĐÃ CHÈN SẴN
+// ======================================================
+
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbzUZVIgxyWO3GAgRmDTyXUhTdcdw9ezmXfMc3-69iA_EF9U3ZpA1RN4N_gQglkuWrAy/exec";
+
+
+// ======================================================
+// ELEMENT
+// ======================================================
+
+const video =
+  document.getElementById("video");
+
+const canvas =
+  document.getElementById("canvas");
+
+const cameraOverlay =
+  document.getElementById("cameraOverlay");
+
+const startCamera =
+  document.getElementById("startCamera");
+
+const employeeName =
+  document.getElementById("employeeName");
+
+const btnIn =
+  document.getElementById("btnIn");
+
+const btnOut =
+  document.getElementById("btnOut");
+
+const toast =
+  document.getElementById("toast");
+
+const flash =
+  document.getElementById("flash");
+
+
+let cameraStream = null;
+
+let isSaving = false;
+
+let toastTimer = null;
+
+
+// ======================================================
+// THÔNG BÁO
+// ======================================================
+
+function showToast(
+  message,
+  type = "",
+  autoHide = true
+) {
+
+  if (toastTimer) {
+
+    clearTimeout(
+      toastTimer
+    );
+
+  }
+
+
+  toast.textContent =
+    message;
+
+
+  toast.className =
+    "toast show " + type;
+
+
+  if (autoHide) {
+
+    toastTimer =
+      setTimeout(
+        function () {
+
+          toast.classList.remove(
+            "show"
+          );
+
+        },
+        3500
+      );
+
+  }
+
+}
+
+
+// ======================================================
+// BẬT CAMERA
+// ======================================================
+
+startCamera.addEventListener(
+  "click",
+  async function () {
+
+    try {
+
+      startCamera.disabled =
+        true;
+
+
+      startCamera.textContent =
+        "ĐANG MỞ CAMERA...";
+
+
+      // Kiểm tra trình duyệt
+
+      if (
+        !navigator.mediaDevices ||
+        !navigator.mediaDevices.getUserMedia
+      ) {
+
+        throw new Error(
+          "Trình duyệt không hỗ trợ Camera."
+        );
+
+      }
+
+
+      // Tắt camera cũ
+
+      if (cameraStream) {
+
+        cameraStream
+          .getTracks()
+          .forEach(
+            function (track) {
+
+              track.stop();
+
+            }
+          );
+
+      }
+
+
+      // Mở camera
+
+      cameraStream =
+        await navigator.mediaDevices
+          .getUserMedia({
+
+            video: {
+
+              facingMode: {
+                ideal: "user"
+              },
+
+              width: {
+                ideal: 1280
+              },
+
+              height: {
+                ideal: 720
+              }
+
+            },
+
+            audio: false
+
+          });
+
+
+      video.srcObject =
+        cameraStream;
+
+
+      await video.play();
+
+
+      // Camera sẵn sàng
+
+      cameraOverlay.style.display =
+        "none";
+
+
+      btnIn.disabled =
+        false;
+
+
+      btnOut.disabled =
+        false;
+
+
+      showToast(
+        "✅ Camera đã sẵn sàng!",
+        "success"
+      );
+
+
+    }
+
+    catch (error) {
+
+
+      console.error(
+        "Camera Error:",
+        error
+      );
+
+
+      startCamera.disabled =
+        false;
+
+
+      startCamera.textContent =
+        "BẬT MÁY ẢNH";
+
+
+      if (
+        error.name ===
+        "NotAllowedError"
+      ) {
+
+        showToast(
+          "⚠️ Bạn chưa cho phép Camera!",
+          "error"
+        );
+
+      }
+
+      else if (
+        error.name ===
+        "NotFoundError"
+      ) {
+
+        showToast(
+          "❌ Không tìm thấy Camera!",
+          "error"
+        );
+
+      }
+
+      else if (
+        error.name ===
+        "NotReadableError"
+      ) {
+
+        showToast(
+          "❌ Camera đang được ứng dụng khác sử dụng!",
+          "error"
+        );
+
+      }
+
+      else {
+
+        showToast(
+          "❌ " + error.message,
+          "error"
+        );
+
+      }
+
+    }
+
+  }
+);
+
+
+// ======================================================
+// VÀO CA
+// ======================================================
+
+btnIn.addEventListener(
+  "click",
+  function () {
+
+    takeSnapshot(
+      "VÀO CA"
+    );
+
+  }
+);
+
+
+// ======================================================
+// RA CA
+// ======================================================
+
+btnOut.addEventListener(
+  "click",
+  function () {
+
+    takeSnapshot(
+      "RA CA"
+    );
+
+  }
+);
+
+
+// ======================================================
+// CHỤP ẢNH
+// ======================================================
+
+function takeSnapshot(type) {
+
+
+  if (isSaving) {
+
+    return;
+
+  }
+
+
+  const name =
+    employeeName.value.trim();
+
+
+  // Kiểm tra tên
+
+  if (!name) {
+
+    showToast(
+      "⚠️ Vui lòng nhập tên nhân viên!",
+      "error"
+    );
+
+
+    employeeName.focus();
+
+
+    return;
+
+  }
+
+
+  // Kiểm tra Camera
+
+  if (
+    !cameraStream ||
+    !video.videoWidth ||
+    !video.videoHeight
+  ) {
+
+    showToast(
+      "⚠️ Camera chưa sẵn sàng!",
+      "error"
+    );
+
+
+    return;
+
+  }
+
+
+  // Khóa nút
+
+  isSaving =
+    true;
+
+
+  btnIn.disabled =
+    true;
+
+
+  btnOut.disabled =
+    true;
+
+
+  showToast(
+    "📤 Đang lưu ảnh...",
+    "loading",
+    false
+  );
+
+
+  // ====================================================
+  // FLASH
+  // ====================================================
+
+  flash.style.opacity =
+    "0.85";
+
+
+  setTimeout(
+    function () {
+
+      flash.style.opacity =
+        "0";
+
+    },
+    100
+  );
+
+
+  // ====================================================
+  // NÉN ẢNH
+  // ====================================================
+
+  // 480px giúp upload nhanh
+
+  const MAX_WIDTH =
+    480;
+
+
+  // Chất lượng 42%
+
+  const JPEG_QUALITY =
+    0.42;
+
+
+  let scale =
+    MAX_WIDTH /
+    video.videoWidth;
+
+
+  if (scale > 1) {
+
+    scale = 1;
+
+  }
+
+
+  canvas.width =
+    Math.round(
+      video.videoWidth *
+      scale
+    );
+
+
+  canvas.height =
+    Math.round(
+      video.videoHeight *
+      scale
+    );
+
+
+  const ctx =
+    canvas.getContext(
+      "2d",
+      {
+        alpha: false
+      }
+    );
+
+
+  // Reset
+
+  ctx.setTransform(
+    1,
+    0,
+    0,
+    1,
+    0,
+    0
+  );
+
+
+  // Lật selfie
+
+  ctx.translate(
+    canvas.width,
+    0
+  );
+
+
+  ctx.scale(
+    -1,
+    1
+  );
+
+
+  ctx.drawImage(
+    video,
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
+
+
+  // JPEG Base64
+
+  const base64Data =
+    canvas.toDataURL(
+      "image/jpeg",
+      JPEG_QUALITY
+    );
+
+
+  // Hiển thị kích thước trong Console
+
+  console.log(
+    "Dung lượng ảnh khoảng:",
+    Math.round(
+      base64Data.length *
+      0.75 /
+      1024
+    ),
+    "KB"
+  );
+
+
+  // Gửi Apps Script
+
+  sendToAppsScript(
+    name,
+    type,
+    base64Data
+  );
+
+}
+
+
+// ======================================================
+// GỬI APPS SCRIPT
+// ======================================================
+
+function sendToAppsScript(
+  name,
+  type,
+  base64Data
+) {
+
+
+  const form =
+    document.createElement(
+      "form"
+    );
+
+
+  form.method =
+    "POST";
+
+
+  form.action =
+    SCRIPT_URL;
+
+
+  form.target =
+    "uploadFrame";
+
+
+  form.style.display =
+    "none";
+
+
+  // Tên
+
+  const nameField =
+    document.createElement(
+      "input"
+    );
+
+
+  nameField.type =
+    "hidden";
+
+
+  nameField.name =
+    "employeeName";
+
+
+  nameField.value =
+    name;
+
+
+  // Loại
+
+  const typeField =
+    document.createElement(
+      "input"
+    );
+
+
+  typeField.type =
+    "hidden";
+
+
+  typeField.name =
+    "type";
+
+
+  typeField.value =
+    type;
+
+
+  // Ảnh
+
+  const imageField =
+    document.createElement(
+      "textarea"
+    );
+
+
+  imageField.name =
+    "base64Data";
+
+
+  imageField.value =
+    base64Data;
+
+
+  imageField.style.display =
+    "none";
+
+
+  form.appendChild(
+    nameField
+  );
+
+
+  form.appendChild(
+    typeField
+  );
+
+
+  form.appendChild(
+    imageField
+  );
+
+
+  document.body.appendChild(
+    form
+  );
+
+
+  // Gửi
+
+  form.submit();
+
+
+  // Xóa form sau khi gửi
+
+  setTimeout(
+    function () {
+
+      form.remove();
+
+    },
+    1000
+  );
+
+}
+
+
+// ======================================================
+// NHẬN KẾT QUẢ
+// ======================================================
+
+window.addEventListener(
+  "message",
+  function (event) {
+
+
+    if (
+      !event.data ||
+      event.data.type !==
+      "CHECKIN_RESULT"
+    ) {
+
+      return;
+
+    }
+
+
+    const result =
+      event.data.result;
+
+
+    isSaving =
+      false;
+
+
+    btnIn.disabled =
+      false;
+
+
+    btnOut.disabled =
+      false;
+
+
+    if (
+      result ===
+      "Thành công!"
+    ) {
+
+      showToast(
+        "✅ Chấm công thành công!",
+        "success"
+      );
+
+    }
+
+    else {
+
+      showToast(
+        "❌ " + result,
+        "error"
+      );
+
+    }
+
+  }
+);
+
+
+// ======================================================
+// TẮT CAMERA KHI ĐÓNG TRANG
+// ======================================================
+
+window.addEventListener(
+  "beforeunload",
+  function () {
+
+
+    if (cameraStream) {
+
+
+      cameraStream
+        .getTracks()
+        .forEach(
+          function (track) {
+
+            track.stop();
+
+          }
+        );
+
+    }
+
+  }
+);
+
+
+</script>
+
+</body>
+
+</html>
