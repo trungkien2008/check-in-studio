@@ -1,348 +1,192 @@
 <!DOCTYPE html>
-
 <html lang="vi">
 
 <head>
-
 <meta charset="UTF-8">
 
 <meta
   name="viewport"
-  content="width=device-width,
-  initial-scale=1.0,
-  maximum-scale=1.0,
-  user-scalable=no"
+  content="width=device-width, initial-scale=1.0,
+  maximum-scale=1.0, user-scalable=no"
 >
 
 <title>Check-in Studio</title>
 
-
 <style>
-
 * {
   box-sizing: border-box;
 }
 
 body {
-
   margin: 0;
-
   min-height: 100vh;
-
   background: #e2e8f0;
-
-  font-family:
-    Arial,
-    Helvetica,
-    sans-serif;
-
+  font-family: Arial, Helvetica, sans-serif;
   display: flex;
-
   justify-content: center;
-
   align-items: center;
-
-  padding: 10px;
-
+  padding: 8px;
 }
-
 
 .card {
-
   width: 100%;
-
   max-width: 520px;
-
   background: white;
-
   border-radius: 28px;
-
   padding: 22px;
-
-  box-shadow:
-    0 10px 35px
-    rgba(0,0,0,.13);
-
+  box-shadow: 0 10px 35px rgba(0,0,0,.13);
 }
-
-
-/* ==========================
-   HEADER
-========================== */
 
 .header {
-
   text-align: center;
-
-  margin-bottom: 20px;
-
+  margin-bottom: 18px;
 }
-
 
 .header h1 {
-
   margin: 0;
-
   color: #17233b;
-
-  font-size: 28px;
-
+  font-size: 27px;
 }
-
 
 .header p {
-
   margin: 7px 0 0;
-
   color: #64748b;
-
+  font-size: 15px;
 }
-
-
-/* ==========================
-   INPUT
-========================== */
 
 label {
-
   display: block;
-
   margin-bottom: 7px;
-
   color: #52627a;
-
   font-size: 14px;
-
   font-weight: bold;
-
 }
-
 
 input {
-
   width: 100%;
-
   height: 55px;
-
   padding: 0 16px;
-
   border: 2px solid #cbd5e1;
-
   border-radius: 15px;
-
   outline: none;
-
   font-size: 17px;
-
 }
-
 
 input:focus {
-
   border-color: #4361ee;
-
 }
 
-
-/* ==========================
-   CAMERA
-========================== */
+/* CAMERA */
 
 .camera-box {
-
   position: relative;
-
   width: 100%;
-
   aspect-ratio: 3 / 4;
-
-  max-height: 520px;
-
-  margin-top: 18px;
-
+  max-height: 500px;
+  margin-top: 17px;
   overflow: hidden;
-
   background: #111827;
-
   border-radius: 22px;
-
 }
-
 
 #video {
-
   width: 100%;
-
   height: 100%;
-
   object-fit: cover;
-
 }
 
-
-/* CAMERA TRƯỚC HIỂN THỊ NHƯ GƯƠNG */
-
+/* camera trước nhìn như gương */
 #video.front-camera {
-
   transform: scaleX(-1);
-
 }
 
-
-/* ==========================
-   ẢNH VỪA CHỤP
-========================== */
-
+/* ảnh vừa chụp */
 #photoPreview {
-
   position: absolute;
-
   inset: 0;
-
   z-index: 5;
-
   width: 100%;
-
   height: 100%;
-
   object-fit: cover;
-
   display: none;
-
   background: #111827;
-
 }
 
-
-/* ==========================
-   MÀN HÌNH MỞ CAMERA
-========================== */
-
+/* màn hình bật camera */
 .camera-overlay {
-
   position: absolute;
-
   inset: 0;
-
   z-index: 10;
 
   display: flex;
-
   flex-direction: column;
-
   justify-content: center;
-
   align-items: center;
 
   padding: 25px;
-
-  color: white;
-
-  text-align: center;
-
   background: #1e293b;
-
+  color: white;
+  text-align: center;
 }
-
 
 .camera-icon {
-
-  font-size: 52px;
-
+  font-size: 50px;
   margin-bottom: 10px;
-
 }
-
 
 .camera-overlay h2 {
-
   margin: 0 0 8px;
-
 }
-
 
 .camera-overlay p {
-
   max-width: 300px;
-
   margin: 0 0 20px;
-
   color: #e2e8f0;
-
   line-height: 1.5;
-
 }
-
-
-/* ==========================
-   BẬT CAMERA
-========================== */
 
 .start-btn {
-
   padding: 15px 28px;
-
   border: none;
-
   border-radius: 15px;
-
   background: #4361ee;
-
   color: white;
-
   font-size: 16px;
-
   font-weight: bold;
-
   cursor: pointer;
-
 }
 
+.start-btn:disabled {
+  opacity: .6;
+}
 
-/* ==========================
-   ĐỔI CAMERA
-========================== */
+/* đổi camera */
 
 .switch-camera {
-
   position: absolute;
-
   top: 15px;
-
   right: 15px;
-
   z-index: 7;
 
   width: 50px;
-
   height: 50px;
 
   display: none;
 
   border: none;
-
   border-radius: 50%;
 
-  background:
-    rgba(0,0,0,.50);
-
+  background: rgba(0,0,0,.5);
   color: white;
 
   font-size: 25px;
-
   cursor: pointer;
-
 }
 
-
 .camera-label {
-
   position: absolute;
-
   top: 18px;
-
   left: 15px;
-
   z-index: 6;
 
   display: none;
@@ -351,225 +195,135 @@ input:focus {
 
   border-radius: 20px;
 
-  background:
-    rgba(0,0,0,.45);
+  background: rgba(0,0,0,.45);
 
   color: white;
-
   font-size: 12px;
-
 }
 
-
-/* ==========================
-   ĐANG LƯU
-========================== */
+/* ĐANG LƯU */
 
 .saving-overlay {
-
   position: absolute;
-
   inset: 0;
-
   z-index: 20;
 
   display: none;
 
   flex-direction: column;
-
   justify-content: center;
-
   align-items: center;
 
-  background:
-    rgba(15,23,42,.72);
-
+  background: rgba(15,23,42,.72);
   color: white;
-
 }
 
-
 .spinner {
-
-  width: 45px;
-
-  height: 45px;
+  width: 44px;
+  height: 44px;
 
   margin-bottom: 15px;
 
-  border: 4px solid
-    rgba(255,255,255,.30);
-
+  border: 4px solid rgba(255,255,255,.3);
   border-top-color: white;
-
   border-radius: 50%;
 
-  animation:
-    spin .8s linear infinite;
-
+  animation: spin .7s linear infinite;
 }
-
 
 @keyframes spin {
-
   to {
-
-    transform:
-      rotate(360deg);
-
+    transform: rotate(360deg);
   }
-
 }
-
 
 .saving-title {
-
   font-size: 19px;
-
   font-weight: bold;
-
 }
-
 
 .saving-subtitle {
-
   margin-top: 7px;
-
   color: #e2e8f0;
-
   font-size: 13px;
-
 }
 
-
-/* ==========================
-   BUTTON
-========================== */
+/* BUTTON */
 
 .buttons {
-
   display: flex;
-
   gap: 12px;
-
-  margin-top: 20px;
-
+  margin-top: 19px;
 }
 
-
 .check-btn {
-
   flex: 1;
-
-  min-height: 75px;
+  min-height: 72px;
 
   border: none;
-
   border-radius: 17px;
 
   color: white;
 
   font-size: 16px;
-
   font-weight: bold;
 
   cursor: pointer;
-
 }
-
 
 .check-btn:active {
-
-  transform:
-    scale(.96);
-
+  transform: scale(.96);
 }
-
 
 .check-btn:disabled {
-
   opacity: .45;
-
   cursor: not-allowed;
-
   transform: none;
-
 }
-
 
 .in {
-
   background: #10b981;
-
 }
-
 
 .out {
-
   background: #ef4444;
-
 }
 
-
-/* ==========================
-   STATUS
-========================== */
+/* STATUS */
 
 .status-box {
-
   display: none;
 
   margin-top: 15px;
-
   padding: 15px;
 
   border-radius: 14px;
 
   line-height: 1.6;
-
   text-align: center;
-
+  font-size: 14px;
 }
-
 
 .status-box.success {
-
   display: block;
-
   background: #ecfdf5;
-
-  border:
-    1px solid #a7f3d0;
-
+  border: 1px solid #a7f3d0;
   color: #047857;
-
 }
-
 
 .status-box.error {
-
   display: block;
-
   background: #fef2f2;
-
-  border:
-    1px solid #fecaca;
-
+  border: 1px solid #fecaca;
   color: #b91c1c;
-
 }
 
-
-/* ==========================
-   TOAST
-========================== */
+/* TOAST */
 
 .toast {
-
   position: fixed;
 
   left: 50%;
-
   bottom: 25px;
 
   z-index: 10000;
@@ -580,12 +334,8 @@ input:focus {
 
   border-radius: 30px;
 
-  background: #334155;
-
   color: white;
-
   font-weight: bold;
-
   text-align: center;
 
   opacity: 0;
@@ -595,52 +345,33 @@ input:focus {
     translateY(100px);
 
   transition: .3s;
-
 }
 
-
 .toast.show {
-
   opacity: 1;
 
   transform:
     translateX(-50%)
     translateY(0);
-
 }
-
 
 .toast.success {
-
   background: #10b981;
-
 }
-
 
 .toast.error {
-
   background: #ef4444;
-
 }
-
 
 .toast.loading {
-
   background: #4361ee;
-
 }
 
-
-/* ==========================
-   FLASH CAMERA
-========================== */
+/* FLASH */
 
 #flash {
-
   position: fixed;
-
   inset: 0;
-
   z-index: 9999;
 
   pointer-events: none;
@@ -649,110 +380,59 @@ input:focus {
 
   opacity: 0;
 
-  transition:
-    opacity .08s;
-
+  transition: opacity .08s;
 }
 
-
-/* ==========================
-   MOBILE
-========================== */
+/* MOBILE */
 
 @media(max-width:480px) {
 
   body {
-
     padding: 4px;
-
-    align-items:
-      flex-start;
-
+    align-items: flex-start;
   }
-
 
   .card {
-
     padding: 16px;
-
     border-radius: 23px;
-
   }
-
 
   .header h1 {
-
     font-size: 24px;
-
   }
-
 
   .header p {
-
     font-size: 14px;
-
   }
-
 
   .camera-box {
-
     margin-top: 14px;
-
     max-height: 470px;
-
   }
-
 
   .buttons {
-
     gap: 9px;
-
   }
-
 
   .check-btn {
-
     min-height: 68px;
-
   }
-
 }
-
 </style>
-
 </head>
-
 
 <body>
 
-
 <div class="card">
 
-
-  <!-- HEADER -->
-
   <div class="header">
-
-    <h1>
-      📷 Check-in Studio
-    </h1>
-
-    <p>
-      Hệ thống chấm công tự động
-    </p>
-
+    <h1>📷 Check-in Studio</h1>
+    <p>Hệ thống chấm công tự động</p>
   </div>
 
-
-
-  <!-- TÊN NHÂN VIÊN -->
-
   <label for="employeeName">
-
     HỌ VÀ TÊN NHÂN VIÊN
-
   </label>
-
 
   <input
     id="employeeName"
@@ -761,12 +441,7 @@ input:focus {
     autocomplete="name"
   >
 
-
-
-  <!-- CAMERA -->
-
   <div class="camera-box">
-
 
     <video
       id="video"
@@ -775,18 +450,10 @@ input:focus {
       playsinline
     ></video>
 
-
-
-    <!-- ẢNH VỪA CHỤP -->
-
     <img
       id="photoPreview"
       alt="Ảnh vừa chụp"
     >
-
-
-
-    <!-- TÊN CAMERA -->
 
     <div
       id="cameraLabel"
@@ -795,21 +462,14 @@ input:focus {
       CAMERA TRƯỚC
     </div>
 
-
-
-    <!-- ĐỔI CAMERA -->
-
     <button
       id="switchCamera"
       class="switch-camera"
       type="button"
+      title="Đổi camera"
     >
       🔄
     </button>
-
-
-
-    <!-- MỞ CAMERA -->
 
     <div
       id="cameraOverlay"
@@ -820,17 +480,12 @@ input:focus {
         📷
       </div>
 
-
-      <h2>
-        Camera chấm công
-      </h2>
-
+      <h2>Camera chấm công</h2>
 
       <p>
-        Bật Camera để chụp ảnh
+        Bật camera để chụp ảnh
         khi vào ca hoặc ra ca.
       </p>
-
 
       <button
         id="startCamera"
@@ -842,10 +497,6 @@ input:focus {
 
     </div>
 
-
-
-    <!-- ĐANG LƯU -->
-
     <div
       id="savingOverlay"
       class="saving-overlay"
@@ -853,31 +504,19 @@ input:focus {
 
       <div class="spinner"></div>
 
-
       <div class="saving-title">
-
         📤 Đang lưu ảnh...
-
       </div>
 
-
       <div class="saving-subtitle">
-
-        Vui lòng chờ trong giây lát
-
+        Đang gửi lên Google Drive
       </div>
 
     </div>
 
-
   </div>
 
-
-
-  <!-- BUTTON -->
-
   <div class="buttons">
-
 
     <button
       id="btnIn"
@@ -885,13 +524,9 @@ input:focus {
       type="button"
       disabled
     >
-
-      👋
-      <br>
+      👋<br>
       VÀO CA
-
     </button>
-
 
     <button
       id="btnOut"
@@ -899,55 +534,30 @@ input:focus {
       type="button"
       disabled
     >
-
-      🏃
-      <br>
+      🏃<br>
       RA CA
-
     </button>
 
-
   </div>
-
-
-
-  <!-- KẾT QUẢ -->
 
   <div
     id="statusBox"
     class="status-box"
   ></div>
 
-
 </div>
-
-
-
-<!-- CANVAS CHỤP ẢNH -->
 
 <canvas
   id="canvas"
   style="display:none;"
 ></canvas>
 
-
-
-<!-- FLASH -->
-
 <div id="flash"></div>
-
-
-
-<!-- TOAST -->
 
 <div
   id="toast"
   class="toast"
 ></div>
-
-
-
-<!-- NƠI NHẬN PHẢN HỒI APPS SCRIPT -->
 
 <iframe
   id="uploadFrame"
@@ -956,17 +566,14 @@ input:focus {
 ></iframe>
 
 
-
 <script>
 
-
 // ======================================================
-// APPS SCRIPT URL
+// GOOGLE APPS SCRIPT
 // ======================================================
 
 const SCRIPT_URL =
   "https://script.google.com/macros/s/AKfycbzUZVIgxyWO3GAgRmDTyXUhTdcdw9ezmXfMc3-69iA_EF9U3ZpA1RN4N_gQglkuWrAy/exec";
-
 
 
 // ======================================================
@@ -976,82 +583,44 @@ const SCRIPT_URL =
 const video =
   document.getElementById("video");
 
-
 const canvas =
   document.getElementById("canvas");
 
-
 const photoPreview =
-  document.getElementById(
-    "photoPreview"
-  );
-
+  document.getElementById("photoPreview");
 
 const cameraOverlay =
-  document.getElementById(
-    "cameraOverlay"
-  );
-
+  document.getElementById("cameraOverlay");
 
 const startCamera =
-  document.getElementById(
-    "startCamera"
-  );
-
+  document.getElementById("startCamera");
 
 const switchCamera =
-  document.getElementById(
-    "switchCamera"
-  );
-
+  document.getElementById("switchCamera");
 
 const cameraLabel =
-  document.getElementById(
-    "cameraLabel"
-  );
-
+  document.getElementById("cameraLabel");
 
 const employeeName =
-  document.getElementById(
-    "employeeName"
-  );
-
+  document.getElementById("employeeName");
 
 const btnIn =
-  document.getElementById(
-    "btnIn"
-  );
-
+  document.getElementById("btnIn");
 
 const btnOut =
-  document.getElementById(
-    "btnOut"
-  );
-
+  document.getElementById("btnOut");
 
 const savingOverlay =
-  document.getElementById(
-    "savingOverlay"
-  );
-
+  document.getElementById("savingOverlay");
 
 const statusBox =
-  document.getElementById(
-    "statusBox"
-  );
-
+  document.getElementById("statusBox");
 
 const toast =
-  document.getElementById(
-    "toast"
-  );
-
+  document.getElementById("toast");
 
 const flash =
-  document.getElementById(
-    "flash"
-  );
-
+  document.getElementById("flash");
 
 
 // ======================================================
@@ -1060,19 +629,15 @@ const flash =
 
 let cameraStream = null;
 
-
-// Camera trước mặc định
 let currentFacing = "user";
-
 
 let isSaving = false;
 
-
 let saveStartTime = 0;
-
 
 let toastTimer = null;
 
+let saveTimeout = null;
 
 
 // ======================================================
@@ -1086,58 +651,40 @@ function showToast(
 ) {
 
   if (toastTimer) {
-
-    clearTimeout(
-      toastTimer
-    );
-
+    clearTimeout(toastTimer);
   }
 
-
-  toast.textContent =
-    message;
-
+  toast.textContent = message;
 
   toast.className =
     "toast show " + type;
 
-
   if (autoHide) {
 
     toastTimer =
-      setTimeout(
-        function() {
+      setTimeout(function () {
 
-          toast.classList.remove(
-            "show"
-          );
+        toast.classList.remove(
+          "show"
+        );
 
-        },
-        3500
-      );
+      }, 3000);
 
   }
-
 }
-
 
 
 // ======================================================
 // STATUS
 // ======================================================
 
-function setStatus(
-  html,
-  type
-) {
+function setStatus(html, type) {
 
   statusBox.className =
     "status-box " + type;
 
-
   statusBox.innerHTML =
     html;
-
 }
 
 
@@ -1146,12 +693,9 @@ function clearStatus() {
   statusBox.className =
     "status-box";
 
-
   statusBox.innerHTML =
     "";
-
 }
-
 
 
 // ======================================================
@@ -1162,9 +706,7 @@ async function openCamera() {
 
   try {
 
-    startCamera.disabled =
-      true;
-
+    startCamera.disabled = true;
 
     startCamera.textContent =
       "ĐANG MỞ CAMERA...";
@@ -1178,28 +720,21 @@ async function openCamera() {
       throw new Error(
         "Trình duyệt không hỗ trợ Camera."
       );
-
     }
 
 
     // Tắt camera cũ
-
     if (cameraStream) {
 
       cameraStream
         .getTracks()
-        .forEach(
-          function(track) {
+        .forEach(function(track) {
 
-            track.stop();
+          track.stop();
 
-          }
-        );
-
+        });
     }
 
-
-    // Mở camera
 
     cameraStream =
       await navigator.mediaDevices
@@ -1212,11 +747,11 @@ async function openCamera() {
             },
 
             width: {
-              ideal: 1280
+              ideal: 640
             },
 
             height: {
-              ideal: 720
+              ideal: 480
             }
 
           },
@@ -1293,7 +828,7 @@ async function openCamera() {
     ) {
 
       showToast(
-        "⚠️ Bạn chưa cho phép Camera!",
+        "⚠️ Hãy cho phép sử dụng Camera!",
         "error"
       );
 
@@ -1311,18 +846,6 @@ async function openCamera() {
 
     }
 
-    else if (
-      error.name ===
-      "NotReadableError"
-    ) {
-
-      showToast(
-        "❌ Camera đang được ứng dụng khác sử dụng!",
-        "error"
-      );
-
-    }
-
     else {
 
       showToast(
@@ -1331,11 +854,8 @@ async function openCamera() {
       );
 
     }
-
   }
-
 }
-
 
 
 // ======================================================
@@ -1344,14 +864,11 @@ async function openCamera() {
 
 function updateCameraUI() {
 
-  if (
-    currentFacing === "user"
-  ) {
+  if (currentFacing === "user") {
 
     video.classList.add(
       "front-camera"
     );
-
 
     cameraLabel.textContent =
       "CAMERA TRƯỚC";
@@ -1364,14 +881,11 @@ function updateCameraUI() {
       "front-camera"
     );
 
-
     cameraLabel.textContent =
       "CAMERA SAU";
 
   }
-
 }
-
 
 
 // ======================================================
@@ -1384,7 +898,6 @@ startCamera.addEventListener(
 );
 
 
-
 // ======================================================
 // ĐỔI CAMERA
 // ======================================================
@@ -1394,9 +907,7 @@ switchCamera.addEventListener(
   async function() {
 
     if (isSaving) {
-
       return;
-
     }
 
 
@@ -1422,10 +933,8 @@ switchCamera.addEventListener(
         false;
 
     }
-
   }
 );
-
 
 
 // ======================================================
@@ -1444,7 +953,6 @@ btnIn.addEventListener(
 );
 
 
-
 // ======================================================
 // RA CA
 // ======================================================
@@ -1461,7 +969,6 @@ btnOut.addEventListener(
 );
 
 
-
 // ======================================================
 // CHỤP ẢNH
 // ======================================================
@@ -1469,20 +976,15 @@ btnOut.addEventListener(
 function takeSnapshot(type) {
 
   if (isSaving) {
-
     return;
-
   }
 
 
   const name =
-    employeeName
-      .value
-      .trim();
+    employeeName.value.trim();
 
 
   // Chưa nhập tên
-
   if (!name) {
 
     showToast(
@@ -1490,17 +992,13 @@ function takeSnapshot(type) {
       "error"
     );
 
-
     employeeName.focus();
 
-
     return;
-
   }
 
 
-  // Camera chưa chạy
-
+  // Camera chưa sẵn sàng
   if (
     !cameraStream ||
     !video.videoWidth ||
@@ -1512,46 +1010,42 @@ function takeSnapshot(type) {
       "error"
     );
 
-
     return;
-
   }
 
 
   clearStatus();
 
 
-
   // ====================================================
-  // HIỆU ỨNG FLASH
+  // FLASH
   // ====================================================
 
   flash.style.opacity =
     "0.95";
 
 
-  setTimeout(
-    function() {
+  setTimeout(function () {
 
-      flash.style.opacity =
-        "0";
+    flash.style.opacity =
+      "0";
 
-    },
-    100
-  );
-
+  }, 80);
 
 
   // ====================================================
-  // KÍCH THƯỚC ẢNH
+  // TỐI ƯU ẢNH
+  //
+  // 400px + JPEG 0.32
+  // giúp ảnh nhẹ và upload nhanh hơn.
   // ====================================================
 
   const MAX_WIDTH =
-    480;
+    400;
 
 
   const JPEG_QUALITY =
-    0.42;
+    0.32;
 
 
   let scale =
@@ -1560,9 +1054,7 @@ function takeSnapshot(type) {
 
 
   if (scale > 1) {
-
     scale = 1;
-
   }
 
 
@@ -1599,13 +1091,8 @@ function takeSnapshot(type) {
   );
 
 
-
-  // ====================================================
-  // CHỤP FRAME CAMERA
-  //
-  // Camera trước trên màn hình là gương,
-  // nhưng ảnh lưu giữ chiều thật.
-  // ====================================================
+  // Chụp ảnh thật.
+  // Không lật ảnh lưu.
 
   ctx.drawImage(
     video,
@@ -1616,17 +1103,13 @@ function takeSnapshot(type) {
   );
 
 
-
-  // ====================================================
-  // NÉN JPEG
-  // ====================================================
+  // Nén ảnh
 
   const base64Data =
     canvas.toDataURL(
       "image/jpeg",
       JPEG_QUALITY
     );
-
 
 
   // ====================================================
@@ -1641,16 +1124,13 @@ function takeSnapshot(type) {
     "block";
 
 
-  setTimeout(
-    function() {
+  // Chỉ hiện 0.3 giây
+  setTimeout(function () {
 
-      photoPreview.style.display =
-        "none";
+    photoPreview.style.display =
+      "none";
 
-    },
-    650
-  );
-
+  }, 300);
 
 
   // ====================================================
@@ -1692,11 +1172,7 @@ function takeSnapshot(type) {
   );
 
 
-
-  // ====================================================
-  // HIỂN THỊ DUNG LƯỢNG TRONG CONSOLE
-  // ====================================================
-
+  // Kiểm tra dung lượng
   const sizeKB =
     Math.round(
       base64Data.length *
@@ -1711,19 +1187,79 @@ function takeSnapshot(type) {
   );
 
 
-
   // ====================================================
-  // GỬI
+  // TIMEOUT 15 GIÂY
   // ====================================================
 
+  if (saveTimeout) {
+    clearTimeout(saveTimeout);
+  }
+
+
+  saveTimeout =
+    setTimeout(function () {
+
+      if (!isSaving) {
+        return;
+      }
+
+
+      isSaving =
+        false;
+
+
+      savingOverlay.style.display =
+        "none";
+
+
+      btnIn.disabled =
+        false;
+
+
+      btnOut.disabled =
+        false;
+
+
+      switchCamera.disabled =
+        false;
+
+
+      employeeName.disabled =
+        false;
+
+
+      showToast(
+        "⚠️ Máy chủ phản hồi quá lâu!",
+        "error"
+      );
+
+
+      setStatus(
+
+        "⚠️ <b>Chưa nhận được xác nhận.</b>" +
+
+        "<br>" +
+
+        "Ảnh có thể đã được gửi lên Google Drive." +
+
+        "<br>" +
+
+        "Hãy kiểm tra Google Sheet trước khi chấm công lại.",
+
+        "error"
+
+      );
+
+    }, 15000);
+
+
+  // Gửi ngay lập tức
   sendToAppsScript(
     name,
     type,
     base64Data
   );
-
 }
-
 
 
 // ======================================================
@@ -1758,8 +1294,7 @@ function sendToAppsScript(
     "none";
 
 
-
-  // TÊN NHÂN VIÊN
+  // TÊN
 
   const nameField =
     document.createElement(
@@ -1777,7 +1312,6 @@ function sendToAppsScript(
 
   nameField.value =
     name;
-
 
 
   // LOẠI
@@ -1800,7 +1334,6 @@ function sendToAppsScript(
     type;
 
 
-
   // ẢNH
 
   const imageField =
@@ -1819,7 +1352,6 @@ function sendToAppsScript(
 
   imageField.style.display =
     "none";
-
 
 
   form.appendChild(
@@ -1842,25 +1374,20 @@ function sendToAppsScript(
   );
 
 
+  // Gửi ngay
   form.submit();
 
 
+  setTimeout(function () {
 
-  setTimeout(
-    function() {
+    form.remove();
 
-      form.remove();
-
-    },
-    1000
-  );
-
+  }, 1000);
 }
 
 
-
 // ======================================================
-// NHẬN KẾT QUẢ
+// NHẬN XÁC NHẬN TỪ APPS SCRIPT
 // ======================================================
 
 window.addEventListener(
@@ -1874,12 +1401,23 @@ window.addEventListener(
     ) {
 
       return;
-
     }
 
 
     const result =
       event.data.data;
+
+
+    // Hủy timeout
+    if (saveTimeout) {
+
+      clearTimeout(
+        saveTimeout
+      );
+
+      saveTimeout =
+        null;
+    }
 
 
     const seconds =
@@ -1892,9 +1430,8 @@ window.addEventListener(
       ).toFixed(1);
 
 
-
     // ==================================================
-    // MỞ KHÓA GIAO DIỆN
+    // MỞ KHÓA
     // ==================================================
 
     isSaving =
@@ -1921,7 +1458,6 @@ window.addEventListener(
       false;
 
 
-
     // ==================================================
     // THÀNH CÔNG
     // ==================================================
@@ -1941,7 +1477,7 @@ window.addEventListener(
 
         "✅ <b>" +
         result.type +
-        " thành công!</b>" +
+        " THÀNH CÔNG!</b>" +
 
         "<br>" +
 
@@ -1962,7 +1498,7 @@ window.addEventListener(
 
         "<br>" +
 
-        "⏱ Thời gian xử lý: " +
+        "⚡ Lưu trong " +
         seconds +
         " giây",
 
@@ -1972,7 +1508,7 @@ window.addEventListener(
 
 
       console.log(
-        "CHẤM CÔNG THÀNH CÔNG",
+        "ĐÃ LƯU THÀNH CÔNG:",
         result
       );
 
@@ -1980,7 +1516,7 @@ window.addEventListener(
 
 
     // ==================================================
-    // LỖI
+    // THẤT BẠI
     // ==================================================
 
     else {
@@ -1996,7 +1532,6 @@ window.addEventListener(
 
         message =
           result.message;
-
       }
 
 
@@ -2021,18 +1556,9 @@ window.addEventListener(
         "error"
 
       );
-
-
-      console.error(
-        "Lỗi:",
-        message
-      );
-
     }
-
   }
 );
-
 
 
 // ======================================================
@@ -2047,23 +1573,16 @@ window.addEventListener(
 
       cameraStream
         .getTracks()
-        .forEach(
-          function(track) {
+        .forEach(function(track) {
 
-            track.stop();
+          track.stop();
 
-          }
-        );
-
+        });
     }
-
   }
 );
 
-
 </script>
 
-
 </body>
-
 </html>
